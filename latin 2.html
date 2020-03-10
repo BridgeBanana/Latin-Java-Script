@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <title></title>
+       
+    <meta charset="utf-8">
+       
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+    img {
+        display:block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+   
+    </style>
+       
+</head>
+
+<body>
+
+        <center>Data From following API:http://jsonplaceholder.typicode.com/todos</center>
+        <div class="jumbotron text-center">
+                <h1>Sentence Containing Latin Words Search!</h1>
+            <h2> Search Examples qui,autem,minus!</h2>
+            <h3> </h3>
+                <p>
+                       
+                    </p>
+            </div>
+
+        <div class="container">
+                <div class="row">
+                    <img src="https://www.biography.com/.image/t_share/MTY2NjgyMzA1MzM3NzYyODcx/gettyimages-51242589-2048x2048.jpg" style="width 50%" height="200", width="200">
+                        <div>
+                <p id="joke"></p>
+                <input type="button" onClick="search()" value="Search">
+                <input type="text" id="searchTerm" placeholder="Search...">
+
+                <br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Sentence From Word</th>
+                            <th>Whether the sentence is True or False</th>
+                            <th>Ranking Based on How Good The Sentence Is 1-10</th>
+                        </tr>
+                    </thead>
+                    <tbody id="output">
+                    </tbody>
+                </table>
+               
+                       
+            </div>
+                    </div>
+            </div>
+
+        <script>
+        //function searchForABitocinValue() {
+            //let searchTerm = document.getElementById('searchTerm').value;
+           // console.log(searchTerm);
+            //let url = 'http://api.bitcoincharts.com/v1/markets.json' + searchTerm;
+            //fetch(url)
+                //.then((response) => {
+                //    return response.json();
+               // })
+                //.then((myJson) => {
+                    //console.log(myJson);
+                   // let results = myJson.results;
+
+                   // let p = document.getElementById('output');
+                    //for (var i = 0; i < results.length; i++) {
+                        //let person = results[i];
+                      // p.innerHTML = "USD: "+myJson.USD.24h
+
+                   // }
+
+               // });
+       // }
+           
+            //function search () {
+                //let searchTerm = document.getElementById('searchTerm').value;
+               
+            $("document").ready(function(){
+                loadData();
+            })
+           
+            var allData = [],
+                result = [];            
+           
+            function loadData(){
+                $.ajax({
+                url: 'http://jsonplaceholder.typicode.com/todos',
+                method: 'GET',
+                headers: ({'Content-Type': 'application/json'}),
+                //mode: 'no-cors'                                                                
+                })
+                .done(function(data){
+                    allData = data;
+                    console.log(data);
+                })
+                //.then(data => console.log(data))
+                .fail(err => console.log(err))
+            }
+           
+            function search(){
+                result = [];
+                $('#output').html('');
+                var srcTxt = $('#searchTerm').val();
+                for(var i=0; i < allData.length; i++){
+                    if(allData[i]['title'].indexOf(srcTxt) != -1){
+                        result.push(allData[i]);
+                        $('#output').append('<tr><td>'+allData[i]['title']+'</td><td>'+allData[i]['completed']+'</td><td>'+allData[i]['userId']+'</td></tr>')
+                    }
+                }
+               
+            }
+           
+           
+           
+           
+           
+//search()
+    </script>
